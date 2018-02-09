@@ -10,7 +10,6 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Resiliency Map</h1>
         </header>
-        <p>Simple Change</p> 
         <LeafletMap />
       </div>
     );
