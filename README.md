@@ -22,10 +22,10 @@ Checkout into your dev branch, and then pull from the upstream dev branch to get
 
 Go back into your feature branch and merge the dev branch into it. Fix any merge conflicts
 `git checkout <new-feature-branch>`
-`git merge dev`
+`git merge dev -m "message"`
 
 Push your feature branch to your origin
-`git push <new-feature-branch>`
+`git push origin <new-feature-branch>`
 
 Open a pull request on GitHub with your new-feature-branch
 Go to the repo in your account `https://github.com/<username>/resilience-map-spa`
