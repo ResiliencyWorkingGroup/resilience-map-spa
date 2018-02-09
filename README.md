@@ -1,3 +1,42 @@
+## How to Contribute
+Fork this repo into your GitHub account, then clone the project to your machine:
+`git clone git@github.com:<username>/resilience-map-api.git`
+Add the upstream remote repo:
+`git remote add upstream git@github.com:ResiliencyWorkingGroup/resilience-map-api.git`
+`git fetch upstream`
+`git pull upstream dev`
+
+Create a local dev branch and checkout into it
+`git checkout -b dev`
+
+Create a new branch for the feature you are working on (change new-feature-branch to whatever you want to call it)
+`git checkout -b <new-feature-branch>`
+
+Make some changes on your branch, then commit the changes to the new branch
+`git add .`
+`git commit -am “commit comment"`
+
+Checkout into your dev branch, and then pull from the upstream dev branch to get any changes that happened while you were working on your feature
+`git checkout dev`
+`git pull upstream dev`
+
+Go back into your feature branch and merge the dev branch into it. Fix any merge conflicts
+`git checkout <new-feature-branch>`
+`git merge dev`
+
+Push your feature branch to your origin
+`git push <new-feature-branch>`
+
+Open a pull request on GitHub with your new-feature-branch
+Go to the repo in your account `https://github.com/<username>/resilience-map-spa`
+Click on *Compare & Pull Request* button
+base fork: ResiliencyWorkingGroup
+base: dev
+head fork: <username>/resilience-map-api
+compare: <new-feature-branch>
+
+---
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
