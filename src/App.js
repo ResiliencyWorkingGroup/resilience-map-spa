@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import LeafletMap from './components/LeafletMap';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
