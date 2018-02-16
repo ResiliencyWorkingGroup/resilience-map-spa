@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
+import MapHeader from './components/MapHeader';
 import LeafletMap from './components/LeafletMap';
 import './App.css';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Resiliency Map</h1>
-        </header>
+      <div id="app">
+        <MapHeader />
         <LeafletMap />
       </div>
     );

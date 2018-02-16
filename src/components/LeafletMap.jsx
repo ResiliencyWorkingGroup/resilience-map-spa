@@ -11,11 +11,9 @@ const zoomLevel = 14;
 class LeafletMap extends Component {
   render() {
     return (
-      <div className="map-wrapper">
-        <Map className="map" center={mapCenter} zoom={zoomLevel}>
-          <TileLayer attribution={attribution} url={osmTiles} />
-        </Map>
-      </div>
+      <Map className="map" center={mapCenter} zoom={zoomLevel}>
+        <TileLayer attribution={attribution} url={osmTiles} />
+      </Map>
     );
   }
 }

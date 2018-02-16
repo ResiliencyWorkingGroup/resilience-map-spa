@@ -1,21 +1,5 @@
-.map-wrapper {
-    position: relative;
-    height: 100%;
-  }
-  
-  .map-wrapper {
-    width: 100%;
-    height: 100%;
-    position: absolute;
-  }
-  
-  .map {
-    width: 100%;
-    height: 100%;
-    position: relative;
-  }
-  
-  /* .leaflet-container {
-  height: 500px;
+.map {
+  position: relative;
+  height: 100%;
   width: 100%;
-  } */
+}
