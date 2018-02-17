@@ -1,7 +1,11 @@
-html, body {
+html {
+  height: 100%;
+}
+body {
   margin: 0;
   padding: 0;
-  height: calc(100% - 45px);
+  height: calc(100% - 90px);
+  overflow: hidden;
   font-family: sans-serif;
 }
 
