@@ -12,9 +12,10 @@ L.Icon.Default.mergeOptions({
   iconUrl: require('leaflet/dist/images/marker-icon.png'),
   shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
+
 const osmTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const attribution = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-const mapCenter = [37.80, -122.42];
+const mapCenter = { lat: 37.80, lng: -122.42 };
 const zoomLevel = 14;
 
 class LeafletMap extends Component {
@@ -22,45 +23,36 @@ class LeafletMap extends Component {
     super(props);
 
     this.state = {
-      hasLocation: false,
       latlng: mapCenter,
     }
 
-    this.handleClick = this.handleClick.bind(this);
+    this.handleMapClick = this.handleMapClick.bind(this);
   }
 
-  handleClick(e) {
+  handleMapClick(e) {
     this.setState({
-      hasLocation: true,
       latlng: e.latlng,
-    })
+    });
   }
 
   render() {
     const { latlng } = this.state;
     const { lat, lng } = this.state.latlng;
 
-    const marker = this.state.hasLocation ? (
-      <Marker position={latlng}>
-        <Popup>
-          <span>{lat}, {lng}</span>
-        </Popup>
-      </Marker>
-    ) : null;
-
     return (
       <Map
         className="map"
         center={mapCenter}
         zoom={zoomLevel}
-        onClick={this.handleClick}>
+        onClick={this.handleMapClick}>
+
         <TileLayer attribution={attribution} url={osmTiles} />
-        {/* <Marker position={mapCenter}>
+
+        <Marker position={latlng}>
           <Popup>
-            <span>Center of the Map</span>
+            <span>{lat}, {lng}</span>
           </Popup>
-        </Marker> */}
-        { marker }
+        </Marker>
       </Map>
     );
   }
