@@ -43,8 +43,10 @@ class LeafletMap extends Component {
   }
 
   handleMapClick(e) {
+    const leafletMap = this.leafletMap.leafletElement;
     this.setState({
       latlng: e.latlng,
+      zoomLevel: leafletMap.getZoom(),
     });
   }
 
