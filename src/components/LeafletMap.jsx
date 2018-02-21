@@ -15,18 +15,31 @@ L.Icon.Default.mergeOptions({
 
 const osmTiles = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const attribution = 'Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
-const mapCenter = { lat: 37.80, lng: -122.42 };
-const zoomLevel = 14;
+// const mapCenter = { lat: 37.766945, lng: -122.440629 }; // SF Center
+// const mapCenter = { lat: 37.090240, lng: -95.712891 }; // USA Center
 
 class LeafletMap extends Component {
   constructor (props) {
     super(props);
 
     this.state = {
-      latlng: mapCenter,
+      hasLocation: false,
+      animate: true,
+      // San Francisco
+      // latlng: { lat: 37.766945, lng: -122.440629 },
+      // zoomLevel: 13,
+      // United States
+      latlng: { lat: 37.090240, lng: -95.712891 },
+      zoomLevel: 5,
     }
 
     this.handleMapClick = this.handleMapClick.bind(this);
+    this.handleLocationFound = this.handleLocationFound.bind(this);
+  }
+
+  componentDidMount() {
+    const leafletMap = this.leafletMap.leafletElement;
+    leafletMap.locate();
   }
 
   handleMapClick(e) {
@@ -35,24 +48,38 @@ class LeafletMap extends Component {
     });
   }
 
+  handleLocationFound(e) {
+    this.setState({
+      hasLocation: true,
+      animate: true,
+      latlng: e.latlng,
+      zoomLevel: 17,
+    });
+  }
+
   render() {
-    const { latlng } = this.state;
+    const { latlng, zoomLevel, hasLocation, animate } = this.state;
     const { lat, lng } = this.state.latlng;
 
     return (
       <Map
+        ref={m => { this.leafletMap = m; }}
         className="map"
-        center={mapCenter}
+        center={latlng}
         zoom={zoomLevel}
-        onClick={this.handleMapClick}>
+        animate={animate}
+        onClick={this.handleMapClick}
+        onLocationfound={this.handleLocationFound}>
 
         <TileLayer attribution={attribution} url={osmTiles} />
 
-        <Marker position={latlng}>
-          <Popup>
-            <span>{lat}, {lng}</span>
-          </Popup>
-        </Marker>
+        { hasLocation &&
+          <Marker position={latlng}>
+            <Popup>
+              <span>{lat}, {lng}</span>
+            </Popup>
+          </Marker>
+        }
       </Map>
     );
   }
