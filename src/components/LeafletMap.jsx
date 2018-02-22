@@ -70,7 +70,7 @@ class LeafletMap extends Component {
         center={latlng}
         zoom={zoomLevel}
         animate={animate}
-        onClick={this.handleMapClick}
+        onClick={this.handleMapClick} 
         onLocationfound={this.handleLocationFound}>
 
         <TileLayer attribution={attribution} url={osmTiles} />
