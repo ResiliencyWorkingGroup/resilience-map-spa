@@ -32,11 +32,6 @@ class LeafletMap extends Component {
 
     this.basePath = process.env.REACT_APP_API_SERVER_URL;
 
-    this.emptyDataset = {
-      type: "FeatureCollection",
-      features: [],
-    }
-
     this.state = {
       layerGroupIds: [],
       layerGroupsById: {},
@@ -58,7 +53,7 @@ class LeafletMap extends Component {
           }, {}),
         });
         // return layerGroups.filter(grp => !grp.readOnly); // internal data only
-        return layerGroups; // all data only
+        return layerGroups; // all data
       })
       .then(layerGroups => {
         layerGroups.forEach(layerGroup => {
@@ -109,21 +104,20 @@ class LeafletMap extends Component {
         <TileLayer attribution={attribution} url={osmTiles} />
 
         <LayersControl position="topright">
-          {layerGroupIds.map((layerGroup) => {
+          { layerGroupIds.map((layerGroup) => {
+            if (!layerGroupsById[layerGroup].dataset) return null;
+
             return (
               <Overlay
-                checked={!layerGroupsById[layerGroup].readOnly}
                 key={layerGroup}
-                name={layerGroup}>
-                { layerGroupsById[layerGroup].dataset
-                  ? <GeoJSON data={layerGroupsById[layerGroup].dataset} onEachFeature={this.onEachFeature}/>
-                  : null // warning, child required by Overlay, see console message
-                  // this doesn't work, markers not rendered since intially dataset is undefined
-                  // : <GeoJSON data={this.emptyDataset} onEachFeature={this.onEachFeature}/>
-                }
+                name={layerGroup}
+                checked={!layerGroupsById[layerGroup].readOnly}>
+                <GeoJSON
+                  data={layerGroupsById[layerGroup].dataset}
+                  onEachFeature={this.onEachFeature} />
               </Overlay>
             )
-          })}
+          }) }
         </LayersControl>
 
         <ScaleControl position="bottomleft" />
