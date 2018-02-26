@@ -52,6 +52,7 @@ class LeafletMap extends Component {
             return result;
           }, {}),
         });
+
         // return layerGroups.filter(grp => !grp.readOnly); // internal data only
         return layerGroups; // all data
       })
@@ -92,6 +93,18 @@ class LeafletMap extends Component {
     layer.bindPopup(`${feature.properties.title}`);
   }
 
+  spawnGeoJsonPoint(geoJsonPoint, latlng) {
+    const markerOptions = {};
+    // const markerOptions = {draggable: true}; // example
+    return L.marker(latlng, markerOptions);
+  }
+
+  styleGeoJsonLinePolygon(geoJsonFeature) {
+    const pathOptions = {};
+    // const pathOptions = {color: "#ff0000"}; // example
+    return pathOptions;
+  }
+
   render() {
     // console.log('state', this.state);
     const { layerGroupIds, layerGroupsById } = this.state;
@@ -99,6 +112,7 @@ class LeafletMap extends Component {
     return (
       <Map
         className="map"
+        ref={m => { this.leafletMap = m; }}
         center={mapCenter}
         zoom={zoomLevel}>
         <TileLayer attribution={attribution} url={osmTiles} />
@@ -114,6 +128,8 @@ class LeafletMap extends Component {
                 checked={!layerGroupsById[layerGroup].readOnly}>
                 <GeoJSON
                   data={layerGroupsById[layerGroup].dataset}
+                  pointToLayer={this.spawnGeoJsonPoint}
+                  style={this.styleGeoJsonLinePolygon}
                   onEachFeature={this.onEachFeature} />
               </Overlay>
             )
