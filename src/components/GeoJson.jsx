@@ -7,12 +7,14 @@ class GeoJson extends Component {
     super(props);
 
     this.onEachFeature = this.onEachFeature.bind(this);
-    this.spawnGeoJsonPoint = this.spawnGeoJsonPoint.bind(this);
-    this.styleGeoJsonLinePolygon = this.styleGeoJsonLinePolygon.bind(this);
+    this.pointToLayer = this.pointToLayer.bind(this);
+    this.style = this.style.bind(this);
   }
 
   componentDidMount() {
-  console.log(this.props.layerGroup, this.leafletElement);
+    const element = this.leafletElement;
+    console.log(element);
+    // now what?
   }
 
   onEachFeature(feature, layer) {
@@ -20,13 +22,13 @@ class GeoJson extends Component {
     layer.bindPopup(`${feature.properties.title}`);
   }
 
-  spawnGeoJsonPoint(geoJsonPoint, latlng) {
+  pointToLayer(geoJsonPoint, latlng) {
     // const markerOptions = {draggable: true}; // example
     const markerOptions = {};
     return L.marker(latlng, markerOptions);
   }
 
-  styleGeoJsonLinePolygon(geoJsonFeature) {
+  style(geoJsonFeature) {
     // const pathOptions = {color: "#ff0000"}; // example
     const pathOptions = {};
     return pathOptions;
@@ -35,8 +37,8 @@ class GeoJson extends Component {
     return (
       <GeoJSON
         ref={element => this.leafletElement = element }
-        pointToLayer={this.spawnGeoJsonPoint}
-        style={this.styleGeoJsonLinePolygon}
+        pointToLayer={this.pointToLayer}
+        style={this.style}
         data={this.props.data}
         onEachFeature={this.onEachFeature}
       />
