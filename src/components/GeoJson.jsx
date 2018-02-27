@@ -12,9 +12,8 @@ class GeoJson extends Component {
   }
 
   componentDidMount() {
-    const element = this.leafletElement;
-    console.log(element);
-    // now what?
+    const element = this.leafletElement.leafletElement;
+    element.on('popupopen', () => console.log('popup opened'));
   }
 
   onEachFeature(feature, layer) {
