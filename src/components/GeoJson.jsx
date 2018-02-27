@@ -2,9 +2,16 @@ import React, { Component } from 'react';
 import { GeoJSON } from 'react-leaflet';
 import L from 'leaflet';
 
+const polygonColors = {
+  'SF Neighborhoods': 'purple',
+  'Seismic Hazard Zones': 'red',
+};
+
 class GeoJson extends Component {
   constructor(props) {
     super(props);
+
+    this.layerGroup = this.props.layerGroup;
 
     this.onEachFeature = this.onEachFeature.bind(this);
     this.pointToLayer = this.pointToLayer.bind(this);
@@ -28,8 +35,9 @@ class GeoJson extends Component {
   }
 
   style(geoJsonFeature) {
+    const pathOptions = {color: polygonColors[this.layerGroup] || 'blue'}
     // const pathOptions = {color: "#ff0000"}; // example
-    const pathOptions = {};
+    // const pathOptions = {};
     return pathOptions;
   }
   render() {
