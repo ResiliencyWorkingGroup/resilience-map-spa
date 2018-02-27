@@ -3,8 +3,9 @@ import { Map,
   TileLayer,
   ScaleControl,
   LayersControl,
-  GeoJSON,
+  // GeoJSON,
 } from 'react-leaflet';
+import GeoJson from './GeoJson';
 import 'leaflet/dist/leaflet.css'
 import './LeafletMap.css';
 
@@ -37,12 +38,13 @@ class LeafletMap extends Component {
       layerGroupsById: {},
     };
 
-    this.onEachFeature = this.onEachFeature.bind(this);
     this.fetchLayerGroups = this.fetchLayerGroups.bind(this);
     this.fetchGroupDataset = this.fetchGroupDataset.bind(this);
   }
 
   componentDidMount() {
+    // const leafletMap = this.leafletMap.leafletElement;
+
     this.fetchLayerGroups()
       .then((layerGroups) => {
         this.setState({
@@ -53,7 +55,12 @@ class LeafletMap extends Component {
           }, {}),
         });
 
+        // smaller datasets for use during development, will remove later
+        // return layerGroups.filter(grp => grp.name === 'Open Space');
+        // return layerGroups.filter(grp => grp.name === 'SF Neighborhoods');
+        // return layerGroups.filter(grp => grp.name === 'Open Space' || grp.name === 'SF Neighborhoods');
         // return layerGroups.filter(grp => !grp.readOnly); // internal data only
+
         return layerGroups; // all data
       })
       .then(layerGroups => {
@@ -88,23 +95,6 @@ class LeafletMap extends Component {
       .catch(e => e);
   }
 
-  onEachFeature(feature, layer) {
-    layer.bindTooltip(`${feature.properties.title}`);
-    layer.bindPopup(`${feature.properties.title}`);
-  }
-
-  spawnGeoJsonPoint(geoJsonPoint, latlng) {
-    const markerOptions = {};
-    // const markerOptions = {draggable: true}; // example
-    return L.marker(latlng, markerOptions);
-  }
-
-  styleGeoJsonLinePolygon(geoJsonFeature) {
-    const pathOptions = {};
-    // const pathOptions = {color: "#ff0000"}; // example
-    return pathOptions;
-  }
-
   render() {
     // console.log('state', this.state);
     const { layerGroupIds, layerGroupsById } = this.state;
@@ -112,9 +102,10 @@ class LeafletMap extends Component {
     return (
       <Map
         className="map"
-        ref={m => { this.leafletMap = m; }}
+        // ref={map => { this.leafletMap = map; }}
         center={mapCenter}
-        zoom={zoomLevel}>
+        zoom={zoomLevel} >
+
         <TileLayer attribution={attribution} url={osmTiles} />
 
         <LayersControl position="topright">
@@ -126,11 +117,7 @@ class LeafletMap extends Component {
                 key={layerGroup}
                 name={layerGroup}
                 checked={!layerGroupsById[layerGroup].readOnly}>
-                <GeoJSON
-                  data={layerGroupsById[layerGroup].dataset}
-                  pointToLayer={this.spawnGeoJsonPoint}
-                  style={this.styleGeoJsonLinePolygon}
-                  onEachFeature={this.onEachFeature} />
+                <GeoJson layerGroup={layerGroup} data={layerGroupsById[layerGroup].dataset} />
               </Overlay>
             )
           }) }
