@@ -3,9 +3,8 @@ import { Map,
   TileLayer,
   ScaleControl,
   LayersControl,
-  // GeoJSON,
 } from 'react-leaflet';
-import GeoJson from './GeoJson';
+import GeoJson from '../GeoJson';
 import 'leaflet/dist/leaflet.css'
 import './LeafletMap.css';
 
